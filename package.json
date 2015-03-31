@@ -1,0 +1,11 @@
+{
+  "name": "lambdaCalculusPractice",
+  "version": "1.0.0",
+  "description": "lambda Calculus practice",
+  "main": "n",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jamon Douglas",
+  "license": "ISC"
+}
