@@ -20,6 +20,20 @@ function findCost5CentCandies(numOfCandies){
 	return numOfCandies * 5;
 }
 
-var printCandyCost = R.compose(console.log,makeCandyCostStr,findCost5CentCandies);
+//more flexible
+function findCostofCandies(numOfCandies, costOfCandies){
+	return numOfCandies * costOfCandies;
+}
 
-printCandyCost(20);
+console.log('Each piece of candy cost: '+100/50);
+
+function findCostPerCandyWith100Cent(numOfCandies){
+	return (100/numOfCandies);
+}
+
+var printCandyofKnownCost = R.compose(console.log,makeCandyCostStr,findCost5CentCandies);
+var printCandyCost = R.compose(console.log, makeCandyCostStr,findCostofCandies);
+var printPerCandyCost = R.compose(console.log,makeCandyCostStr, findCostPerCandyWith100Cent);
+printCandyofKnownCost(20);
+printCandyCost(100, 5);
+printPerCandyCost(50);
