@@ -3,6 +3,7 @@ var R = require('ramda');
 
 //You would need to rewrite this if any parameter changed.
 console.log('5 candies at 5 cents each cost: '+ 5*5+' cents.');
+console.log('Each piece of candy cost: '+100/50);
 
 //Abstract the nums and place this into function.
 
@@ -25,15 +26,34 @@ function findCostofCandies(numOfCandies, costOfCandies){
 	return numOfCandies * costOfCandies;
 }
 
-console.log('Each piece of candy cost: '+100/50);
 
 function findCostPerCandyWith100Cent(numOfCandies){
 	return (100/numOfCandies);
 }
 
+function findCostPerCandy(money, numOfCandies){
+	return money/numOfCandies;
+}
+function getCandyOperation(op){
+	return R.eq('*',op);
+}
+function performCostOperationsOnCandies(op, valA, valB){
+	return R.ifElse(getCandyOperation(op),findCostofCandies(valA, valB), findCostPerCandy(valA,valB));
+}
+
+
+var performCostOperation = R.cond(
+	[R.eq('*'), function(op, valA, valB){return findCostofCandies(valA, valB);}],
+	[R.eq('/'), function(op, valA, valB){return findCostPerCandy(valA,valB);}]
+);
+
 var printCandyofKnownCost = R.compose(console.log,makeCandyCostStr,findCost5CentCandies);
 var printCandyCost = R.compose(console.log, makeCandyCostStr,findCostofCandies);
-var printPerCandyCost = R.compose(console.log,makeCandyCostStr, findCostPerCandyWith100Cent);
+var printPerCandyCostWithKnownInputs = R.compose(console.log,makeCandyCostStr, findCostPerCandyWith100Cent);
+var printPerCandyCostUnknownInputs = R.compose(console.log, makeCandyCostStr,findCostPerCandy);
+var printCandyOps = R.compose(console.log,makeCandyCostStr,performCostOperation);
 printCandyofKnownCost(20);
 printCandyCost(100, 5);
-printPerCandyCost(50);
+printPerCandyCostWithKnownInputs(50);
+printPerCandyCostUnknownInputs(1000, 50);
+printCandyOps('/', 10000, 20);
